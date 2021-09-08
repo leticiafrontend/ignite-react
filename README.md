@@ -12,8 +12,8 @@ Repositório para listar meus repositórios de aulas, desafios e projetos feitos
 
 ### Desafios
 
-- [Desafio 01 - Conceitos do React](https://github.com/leticiafrontend/ignite-react/desafio-01)
-- [Desafio 02 - Componentizando a aplicação](https://github.com/leticiafrontend/ignite-react/desafio-02)
+- [Desafio 01 - Conceitos do React](https://github.com/leticiafrontend/ignite-react/tree/main/capitulo-01/desafio-01)
+- [Desafio 02 - Componentizando a aplicação](https://github.com/leticiafrontend/ignite-react/tree/main/capitulo-01/desafio-02)
 
 ### Anotações
 
