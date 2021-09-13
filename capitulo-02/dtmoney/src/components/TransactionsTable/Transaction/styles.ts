@@ -11,5 +11,13 @@ export const Container = styled.tr`
     &:first-child {
       color: var(--title);
     }
+
+    &.withdraw {
+      color: var(--red);
+    }
+
+    &.deposit {
+      color: var(--green);
+    }
   }
 `;

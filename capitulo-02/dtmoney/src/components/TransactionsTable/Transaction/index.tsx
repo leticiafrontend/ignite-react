@@ -3,21 +3,23 @@ import { Container } from './styles';
 
 interface TransactionProps {
   title: string;
-  price: string;
+  amount: string;
   category: string;
   date: string;
+  type: 'deposit' | 'withdraw';
 }
 
 export const Transaction = ({
   title,
-  price,
+  amount,
   category,
   date,
+  type,
 }: TransactionProps) => {
   return (
     <Container>
       <td>{title}</td>
-      <td>{price}</td>
+      <td className={type}>R$ {amount}</td>
       <td>{category}</td>
       <td>{date}</td>
     </Container>
