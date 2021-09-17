@@ -15,7 +15,10 @@ export const Card = ({ type, image, value }: CardProps) => {
           <p>{type}</p>
           <img src={image} alt="entradas" />
         </header>
-        <strong>R$ {value}</strong>
+        <strong>
+          {type === 'Saídas' && '- '}
+          {value}
+        </strong>
       </div>
     </Container>
   );

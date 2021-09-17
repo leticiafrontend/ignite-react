@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { TransactionsContext } from '../../contexts/TransactionsContext';
 
 import { Card } from './Card';
 import { Container } from './styles';
@@ -8,11 +10,53 @@ import saidas from '../../assets/saidas.svg';
 import total from '../../assets/total.svg';
 
 export const Summary = () => {
+  const { transactions } = useContext(TransactionsContext);
+
+  const summary = transactions.reduce(
+    (acc, transaction) => {
+      if (transaction.type === 'deposit') {
+        acc.deposits += transaction.amount;
+        acc.total += transaction.amount;
+      } else {
+        acc.withdraw += transaction.amount;
+        acc.total -= transaction.amount;
+      }
+
+      return acc;
+    },
+    {
+      deposits: 0,
+      withdraw: 0,
+      total: 0,
+    },
+  );
+  console.log(summary);
   return (
     <Container>
-      <Card type="Entradas" image={entradas} value="1.000,00" />
-      <Card type="Saídas" image={saidas} value="1.000,00" />
-      <Card type="Total" image={total} value="1.000,00" />
+      <Card
+        type="Entradas"
+        image={entradas}
+        value={new Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(summary.deposits)}
+      />
+      <Card
+        type="Saídas"
+        image={saidas}
+        value={new Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(summary.withdraw)}
+      />
+      <Card
+        type="Total"
+        image={total}
+        value={new Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(summary.total)}
+      />
     </Container>
   );
 };

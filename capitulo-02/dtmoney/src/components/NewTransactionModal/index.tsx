@@ -1,13 +1,13 @@
-import { useState, FormEvent } from 'react';
-
+import { useState, FormEvent, useContext } from 'react';
 import Modal from 'react-modal';
+
+import { TransactionsContext } from '../../contexts/TransactionsContext';
 
 import closeImg from '../../assets/fechar.svg';
 import incomeImg from '../../assets/entradas.svg';
 import outcomeImg from '../../assets/saidas.svg';
 
 import { Button, Container, TransactionTypeContainer } from './styles';
-import { api } from '../../services/api';
 
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -18,17 +18,28 @@ export const NewTransactionModal = ({
   isOpen,
   onRequestClose,
 }: NewTransactionModalProps) => {
-  const [title, setTitle] = useState('');
-  const [value, setValue] = useState(0);
-  const [category, setCategory] = useState('');
-  const [type, setType] = useState('deposit');
+  const { createTransaction } = useContext(TransactionsContext);
+
+  const [title, setTitle] = useState<string>('');
+  const [amount, setAmount] = useState<number>(0);
+  const [category, setCategory] = useState<string>('');
+  const [type, setType] = useState<'deposit' | 'withdraw'>('deposit');
 
   const handleCreateNewTransition = (event: FormEvent) => {
     event.preventDefault();
-    api.post('/transactions', data);
-  };
+    createTransaction({
+      title,
+      amount,
+      category,
+      type,
+    });
 
-  const data = { title, value, category, type };
+    setTitle('');
+    setAmount(0);
+    setCategory('');
+    setType('deposit');
+    onRequestClose();
+  };
 
   return (
     <Modal
@@ -53,8 +64,8 @@ export const NewTransactionModal = ({
         />
         <input
           placeholder="Valor"
-          value={value}
-          onChange={({ target }) => setValue(Number(target.value))}
+          value={amount}
+          onChange={({ target }) => setAmount(Number(target.value))}
         />
         <TransactionTypeContainer>
           <Button
