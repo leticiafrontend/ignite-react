@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 
 import Modal from 'react-modal';
 
@@ -7,6 +7,7 @@ import incomeImg from '../../assets/entradas.svg';
 import outcomeImg from '../../assets/saidas.svg';
 
 import { Button, Container, TransactionTypeContainer } from './styles';
+import { api } from '../../services/api';
 
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -17,7 +18,17 @@ export const NewTransactionModal = ({
   isOpen,
   onRequestClose,
 }: NewTransactionModalProps) => {
+  const [title, setTitle] = useState('');
+  const [value, setValue] = useState(0);
+  const [category, setCategory] = useState('');
   const [type, setType] = useState('deposit');
+
+  const handleCreateNewTransition = (event: FormEvent) => {
+    event.preventDefault();
+    api.post('/transactions', data);
+  };
+
+  const data = { title, value, category, type };
 
   return (
     <Modal
@@ -33,10 +44,18 @@ export const NewTransactionModal = ({
       >
         <img src={closeImg} alt="Fechar" />
       </button>
-      <Container>
+      <Container onSubmit={handleCreateNewTransition}>
         <h2>Cadastrar transação</h2>
-        <input placeholder="Título" />
-        <input placeholder="Valor" />
+        <input
+          placeholder="Título"
+          value={title}
+          onChange={({ target }) => setTitle(target.value)}
+        />
+        <input
+          placeholder="Valor"
+          value={value}
+          onChange={({ target }) => setValue(Number(target.value))}
+        />
         <TransactionTypeContainer>
           <Button
             type="button"
@@ -57,7 +76,11 @@ export const NewTransactionModal = ({
             Saida
           </Button>
         </TransactionTypeContainer>
-        <input placeholder="Categoria" />
+        <input
+          placeholder="Categoria"
+          value={category}
+          onChange={({ target }) => setCategory(target.value)}
+        />
         <button type="submit">Cadastrar</button>
       </Container>
     </Modal>
