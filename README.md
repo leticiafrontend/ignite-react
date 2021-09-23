@@ -10,6 +10,7 @@ Repositório para listar meus repositórios de aulas, desafios e projetos feitos
 
 - [Capítulo I](https://github.com/leticiafrontend/ignite-react/tree/main/capitulo-01)
 - [Capítulo II](https://github.com/leticiafrontend/ignite-react/tree/main/capitulo-02)
+- [Capítulo III](https://github.com/leticiafrontend/ignite-react/tree/main/capitulo-03)
 
 ### Anotações
 
