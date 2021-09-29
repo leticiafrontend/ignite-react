@@ -16,10 +16,6 @@ export const Pagination = () => {
         <Button 
           size="sm" 
           fontSize="xs" 
-          width="4" colorScheme="pink" bg="gray.700" _hover={{bg:  'gray.500'}} >1</Button>
-        <Button 
-          size="sm" 
-          fontSize="xs" 
           width="4" colorScheme="pink" bg="gray.700" _hover={{bg:  'gray.500'}} >2</Button> 
         <Button 
           size="sm" 
@@ -29,6 +25,10 @@ export const Pagination = () => {
           size="sm" 
           fontSize="xs" 
           width="4" colorScheme="pink" bg="gray.700" _hover={{bg:  'gray.500'}} >4</Button>
+        <Button 
+          size="sm" 
+          fontSize="xs" 
+          width="4" colorScheme="pink" bg="gray.700" _hover={{bg:  'gray.500'}} >5</Button>
       </Stack>
     </Stack>
   )
