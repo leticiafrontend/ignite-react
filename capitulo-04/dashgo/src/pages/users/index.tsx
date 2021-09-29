@@ -12,13 +12,21 @@ import {
   Tr,
   Tbody,
   Text,
+  useBreakpointValue,
 } from '@chakra-ui/react';
+import Link from 'next/link';
 import { RiUserAddLine, RiPencilLine } from 'react-icons/ri';
 import { Header } from '../../components/Header';
 import { Pagination } from '../../components/Pagination';
 import { Sidebar } from '../../components/Sidebar';
 
 export const UsersList = () => {
+
+  const isWideVersion = useBreakpointValue({
+    base: false,
+    lg: true
+  })
+
   return (
     <Box>
       <Header />
@@ -29,30 +37,32 @@ export const UsersList = () => {
             <Heading size="lg" fontWeight="normal">
               Usuários
             </Heading>
-            <Button
-              as="a"
-              size="sm"
-              fontSize="sm"
-              colorScheme="pink"
-              leftIcon={<Icon as={RiUserAddLine} />}
-            >
-              Criar novo
-            </Button>
+            <Link href="/users/create" passHref>
+              <Button
+                as="a"
+                size="sm"
+                fontSize="sm"
+                colorScheme="pink"
+                leftIcon={<Icon as={RiUserAddLine} />}
+              >
+                Criar novo
+              </Button>
+            </Link>
           </Flex>
           <Table colorScheme="whiteAlpha">
             <Thead>
               <Tr>
-                <Th px="6" color="gray.300" width="8">
+                <Th px={["4", "4", "6"]} color="gray.300" width="8">
                   <Checkbox colorScheme="pink" />
                 </Th>
                 <Th>Usuário</Th>
-                <Th>Data de cadastro</Th>
+                {isWideVersion && <Th>Data de cadastro</Th>}
                 <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
               <Tr>
-                <Th px="6">
+                <Th px={["4", "4", "6"]}>
                   <Checkbox colorScheme="pink" />
                 </Th>
                 <Td>
@@ -63,18 +73,20 @@ export const UsersList = () => {
                     </Text>
                   </Box>
                 </Td>
-                <Td>04 de Abril, 2021</Td>
-                <Td>
-                  <Button
-                    as="a"
-                    size="sm"
-                    fontSize="sm"
-                    colorScheme="purple"
-                    leftIcon={<Icon as={RiPencilLine} />}
-                  >
-                    Criar novo
-                  </Button>
-                </Td>
+                {isWideVersion && <Td>04 de Abril, 2021</Td>}
+                {isWideVersion && (
+                  <Td>
+                    <Button
+                      as="a"
+                      size="sm"
+                      fontSize="sm"
+                      colorScheme="purple"
+                      leftIcon={<Icon as={RiPencilLine} />}
+                    >
+                      Criar novo
+                    </Button>
+                  </Td>)
+                }
               </Tr>
             </Tbody>
           </Table>
