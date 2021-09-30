@@ -22,7 +22,7 @@ const Home = () => {
     resolver: yupResolver(sigInFormSchema),
   });
 
-  const { errors } = formState;
+  const { errors, isLoading } = formState;
   const handleSignIn: SubmitHandler<SignInFormData> = (data) => {
     console.log(data);
   };
@@ -59,7 +59,7 @@ const Home = () => {
             mt="6"
             colorScheme="pink"
             size="lg"
-            isLoading={formState.isLoading}
+            isLoading={isLoading}
           >
             Sign In
           </Button>
