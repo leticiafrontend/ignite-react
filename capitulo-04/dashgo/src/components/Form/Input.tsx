@@ -1,5 +1,8 @@
+import { forwardRef, ForwardRefRenderFunction } from 'react';
+import { FieldError } from 'react-hook-form';
 import {
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input as InputLib,
   InputProps as InputPropsLib,
@@ -8,11 +11,15 @@ import {
 interface InputProps extends InputPropsLib {
   name: string;
   label?: string;
+  error?: FieldError;
 }
 
-export const Input = ({ name, label, ...rest }: InputProps) => {
+const InputBase: ForwardRefRenderFunction<
+  HTMLInputElement,
+  InputProps
+> = ({ name, label, error = null, ...rest }, ref) => {
   return (
-    <FormControl>
+    <FormControl isInvalid={!!error}>
       {!!label && <FormLabel htmlFor={label}>{label}</FormLabel>}
       <InputLib
         name={name}
@@ -22,8 +29,13 @@ export const Input = ({ name, label, ...rest }: InputProps) => {
         variant="filled"
         _hover={{ bgColor: 'gray.900' }}
         size="lg"
+        ref={ref}
         {...rest}
       />
+
+      {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
     </FormControl>
   );
 };
+
+export const Input = forwardRef(InputBase);
