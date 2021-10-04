@@ -17,33 +17,38 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { RiUserAddLine, RiPencilLine } from 'react-icons/ri';
 import { Header } from '../../components/Header';
 import { Pagination } from '../../components/Pagination';
 import { Sidebar } from '../../components/Sidebar';
 
 export const UsersList = () => {
-  const { data, isLoading, error } = useQuery('users', async () => {
-    const response = await fetch('http://localhost:3000/api/users');
-    const data = await response.json();
-    const users = data.users.map((user) => {
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        createdAt: new Date(user.createdAt).toLocaleDateString(
-          'pt-BR',
-          {
-            day: '2-digit',
-            month: 'long',
-            year: 'numeric',
-          },
-        ),
-      };
-    });
-    return users;
-  });
+  const { data, isLoading, isFetching, error } = useQuery(
+    'users',
+    async () => {
+      const response = await fetch('http://localhost:3000/api/users');
+      const data = await response.json();
+      const users = data.users.map((user) => {
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          createdAt: new Date(user.createdAt).toLocaleDateString(
+            'pt-BR',
+            {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric',
+            },
+          ),
+        };
+      });
+      return users;
+    },
+    {
+      staleTime: 1000 * 5,
+    },
+  );
 
   console.log(data);
   const isWideVersion = useBreakpointValue({
@@ -60,6 +65,9 @@ export const UsersList = () => {
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Usuários
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
             </Heading>
             <Link href="/users/create" passHref>
               <Button
