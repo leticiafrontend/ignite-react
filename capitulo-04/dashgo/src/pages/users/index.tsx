@@ -24,9 +24,11 @@ import { Header } from '../../components/Header';
 import { Pagination } from '../../components/Pagination';
 import { Sidebar } from '../../components/Sidebar';
 import { useUsers } from '../../hooks/useUsers';
+import { useState } from 'react';
 
 export const UsersList = () => {
-  const { data, isLoading, isFetching, error } = useUsers();
+  const [page, setPage] = useState(1);
+  const { data, isLoading, isFetching, error } = useUsers(page);
 
   console.log(data);
   const isWideVersion = useBreakpointValue({
@@ -98,7 +100,7 @@ export const UsersList = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {data.map((user) => {
+                  {data.users.map((user) => {
                     return (
                       <Tr key={user.id}>
                         <Th px={['4', '4', '6']}>
@@ -107,7 +109,7 @@ export const UsersList = () => {
                         <Td>
                           <Box>
                             <LinkC
-                              color="purple.900"
+                              color="purple"
                               onMouseEnter={() =>
                                 handlePrefetchUser(Number(user.id))
                               }
@@ -140,7 +142,11 @@ export const UsersList = () => {
                   })}
                 </Tbody>
               </Table>
-              <Pagination />
+              <Pagination
+                totalCountOfRegister={data.totalCount}
+                currentPage={page}
+                onPageChange={setPage}
+              />
             </>
           )}
         </Box>
