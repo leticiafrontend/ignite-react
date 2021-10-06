@@ -14,8 +14,11 @@ import {
   Text,
   useBreakpointValue,
   Spinner,
+  Link as LinkC,
 } from '@chakra-ui/react';
 import Link from 'next/link';
+import { queryClient } from '../../services/queryClient';
+import { api } from '../../services/api';
 import { RiUserAddLine, RiPencilLine } from 'react-icons/ri';
 import { Header } from '../../components/Header';
 import { Pagination } from '../../components/Pagination';
@@ -30,6 +33,19 @@ export const UsersList = () => {
     base: false,
     lg: true,
   });
+
+  const handlePrefetchUser = async (userId: number) => {
+    await queryClient.prefetchQuery(
+      ['user', userId],
+      async () => {
+        const response = await api.get(`users/${userId}`);
+        return response.data;
+      },
+      {
+        staleTime: 1000 * 60 * 10,
+      },
+    );
+  };
 
   return (
     <Box>
@@ -90,7 +106,16 @@ export const UsersList = () => {
                         </Th>
                         <Td>
                           <Box>
-                            <Text fontWeight="bold">{user.name}</Text>
+                            <LinkC
+                              color="purple.900"
+                              onMouseEnter={() =>
+                                handlePrefetchUser(Number(user.id))
+                              }
+                            >
+                              <Text fontWeight="bold">
+                                {user.name}
+                              </Text>
+                            </LinkC>
                             <Text fontSize="sm" color="gray.300">
                               {user.email}
                             </Text>

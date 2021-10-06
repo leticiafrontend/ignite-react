@@ -28,8 +28,8 @@ export const getUsers = async (): Promise<User[]> => {
   return users;
 };
 
-export const useUsers = () => {
-  return useQuery('users', getUsers, {
-    staleTime: 1000 * 5,
+export const useUsers = (page: number) => {
+  return useQuery(['users', page], getUsers, {
+    staleTime: 1000 * 60 * 10,
   });
 };

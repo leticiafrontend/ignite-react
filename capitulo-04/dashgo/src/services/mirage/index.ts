@@ -32,6 +32,7 @@ export const makeServer = () => {
       this.namespace = 'api';
       this.timing = 750;
 
+      this.get('/users/:id');
       this.get('/users');
       this.post('/users');
 
