@@ -109,7 +109,7 @@ export const UsersList = () => {
                         <Td>
                           <Box>
                             <LinkC
-                              color="purple"
+                              color="purple.300"
                               onMouseEnter={() =>
                                 handlePrefetchUser(Number(user.id))
                               }
