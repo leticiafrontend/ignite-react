@@ -1,8 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    api.get("/me").then((response) => console.log(response));
+  }, []);
 
   return (
     <>
