@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
-import { parseCookies, setCookie } from "nookies";
+import Router from "next/router";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
 
 let cookies = parseCookies();
 let isRefreshing = false;
@@ -71,7 +72,12 @@ api.interceptors.response.use(
           });
         });
       } else {
+        destroyCookie(undefined, "auth-jwt.token");
+        destroyCookie(undefined, "auth-jwt.refreshToken");
+
+        Router.push("/");
       }
     }
+    return Promise.reject(error);
   }
 );
