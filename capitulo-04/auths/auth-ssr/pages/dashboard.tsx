@@ -9,7 +9,7 @@ import { api } from "../services/apiClient";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
 const Dashboard: NextPage = () => {
-  const { user } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
   const userCanSeeMetrics = useCan({ permissions: ["metrics.list"] });
   useEffect(() => {
     api
@@ -26,6 +26,7 @@ const Dashboard: NextPage = () => {
       <Can permissions={["metrics.list"]}>
         <p>Componente de permissão</p>
       </Can>
+      <button onClick={signOut}>Sair</button>
     </>
   );
 };
