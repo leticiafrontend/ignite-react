@@ -25,7 +25,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Auth with JWT</title>
+        <title>Auth with SSR</title>
         <meta name="description" content="Auth with SSR" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
