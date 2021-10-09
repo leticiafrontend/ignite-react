@@ -22,7 +22,7 @@ const Dashboard: NextPage = () => {
     <>
       <h1>Hello world</h1>
       <p>{user?.email}</p>
-      {userCanSeeMetrics && <p>Hook de permisão</p>}
+      {userCanSeeMetrics && <p>Hook de permissão</p>}
       <Can permissions={["metrics.list"]}>
         <p>Componente de permissão</p>
       </Can>
