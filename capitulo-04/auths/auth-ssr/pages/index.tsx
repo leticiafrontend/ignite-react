@@ -1,5 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
-import { parseCookies } from "nookies";
+import type { NextPage } from "next";
 import Head from "next/head";
 import { FormEvent, useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
