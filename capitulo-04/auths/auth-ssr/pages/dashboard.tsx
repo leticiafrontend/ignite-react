@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import React, { useContext, useEffect } from "react";
+import { Can } from "../components/Can";
 import { AuthContext } from "../context/AuthContext";
 import { useCan } from "../hooks/useCan";
 import { setupAPIClient } from "../services/api";
@@ -21,7 +22,10 @@ const Dashboard: NextPage = () => {
     <>
       <h1>Hello world</h1>
       <p>{user?.email}</p>
-      {userCanSeeMetrics && <p>Olá</p>}
+      {userCanSeeMetrics && <p>Hook de permisão</p>}
+      <Can permissions={["metrics.list"]}>
+        <p>Componente de permissão</p>
+      </Can>
     </>
   );
 };
