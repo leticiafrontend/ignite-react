@@ -3,7 +3,8 @@ import {
   GetServerSidePropsContext,
   GetServerSidePropsResult,
 } from "next";
-import { parseCookies } from "nookies";
+import { destroyCookie, parseCookies } from "nookies";
+import { AuthTokenError } from "../erros/AuthTokenError";
 
 export const withSSRAuth = (fn: GetServerSideProps): GetServerSideProps => {
   return async (
@@ -20,6 +21,19 @@ export const withSSRAuth = (fn: GetServerSideProps): GetServerSideProps => {
       };
     }
 
-    return await fn(ctx);
+    try {
+      return await fn(ctx);
+    } catch (err) {
+      if (err instanceof AuthTokenError) {
+        destroyCookie(ctx, "auth-jwt.token");
+        destroyCookie(ctx, "auth-jwt.refreshToken");
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        };
+      }
+    }
   };
 };

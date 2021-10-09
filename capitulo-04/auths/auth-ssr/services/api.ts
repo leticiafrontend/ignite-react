@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import Router from "next/router";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
+import { AuthTokenError } from "../erros/AuthTokenError";
 
 let isRefreshing = false;
 let failedRequestsQueue = [];
@@ -88,6 +89,8 @@ export const setupAPIClient = (ctx = undefined) => {
             destroyCookie(ctx, "auth-jwt.refreshToken");
 
             Router.push("/");
+          } else {
+            return Promise.reject(new AuthTokenError());
           }
         }
       }
